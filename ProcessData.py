@@ -10,6 +10,7 @@ data_set = pd.read_csv('data/WA_Fn-UseC_-Telco-Customer-Churn.csv')
 dic={"Female":1,"Male":0}
 data_set['gender'] = transforForamt(data_set['gender'],dic)
 
+
 dic_2={"Yes":1,"No":0}
 data_set['Partner'] = transforForamt(data_set['Partner'],dic_2)
 data_set['Dependents'] = transforForamt(data_set['Dependents'],dic_2)
