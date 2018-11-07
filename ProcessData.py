@@ -8,7 +8,7 @@ def transforForamt(dataset, diction):
 
 data_set = pd.read_csv('data/WA_Fn-UseC_-Telco-Customer-Churn.csv')
 dic={"Female":1,"Male":0}
-
+data_set['gender'] = transforForamt(data_set['gender'],dic)
 
 dic_2={"Yes":1,"No":0}
 data_set['Partner'] = transforForamt(data_set['Partner'],dic_2)
@@ -18,7 +18,6 @@ data_set['PaperlessBilling'] = transforForamt(data_set['PaperlessBilling'],dic_2
 data_set['Churn'] = transforForamt(data_set['Churn'],dic_2)
 
 dic_3={"No internet service":-1,"Yes":1, "No":0}
-data_set['MultipleLines'] = transforForamt(data_set['MultipleLines'],dic_3)
 data_set['OnlineSecurity'] = transforForamt(data_set['OnlineSecurity'],dic_3)
 data_set['OnlineBackup'] = transforForamt(data_set['OnlineBackup'],dic_3)
 data_set['DeviceProtection'] = transforForamt(data_set['DeviceProtection'],dic_3)
@@ -33,11 +32,14 @@ data_set['InternetService'] = transforForamt(data_set['InternetService'],dic_4)
 dic_5={"Month-to-month":1,"One year":2, "Two year":3}
 data_set['Contract'] = transforForamt(data_set['Contract'],dic_5)
 
-dic_6={"Electric check":1,"Mailed check":2, "Bank transfer (automatic)":3, "Credit card (automatic)":4}
+dic_6={"Electronic check":1,"Mailed check":2, "Bank transfer (automatic)":3, "Credit card (automatic)":4}
 data_set['PaymentMethod'] = transforForamt(data_set['PaymentMethod'],dic_6)
 
+dic_7={"No phone service":-1,"Yes":1, "No":0}
+data_set['MultipleLines'] = transforForamt(data_set['MultipleLines'],dic_7)
 
-data_set['gender'] = transforForamt(data_set['gender'],dic)
+
+
 data_suffle = data_set.sample(frac=1)
 train_ratio = 0.638
 train_idx = int(train_ratio * data_suffle.shape[0])
@@ -50,6 +52,10 @@ dataframe_test = pd.DataFrame(train_data)
 dataframe_test.to_csv("data/test.csv")
 
 data_train  = pd.read_csv('data/train.csv')
+
+
+#dataframe_test_01 = pd.DataFrame(data_set)
+#dataframe_test_01.to_csv("data/test_01.csv")
 
 print(data_set.shape)
 
