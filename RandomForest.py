@@ -1,7 +1,9 @@
 from sklearn.ensemble import RandomForestClassifier
 import pandas as pd
+from sklearn.metrics import confusion_matrix
+import scikitplot
 
-forest = RandomForestClassifier(n_estimators=10, max_depth=9,max_features=9, min_samples_split=10, bootstrap = True, n_jobs=3)
+
 
 train_set = pd.read_csv('data/train.csv')
 test_set = pd.read_csv('data/test.csv')
@@ -33,18 +35,41 @@ def processData(data):
     return data_arr, label
 
 def accuracy(yhat, y):
-    dif = yhat-y
-    count = 0
-    for item in dif:
-        if item==0:
-            count+=1
-    return count/float(len(y))
+    tn, fp, fn, tp = confusion_matrix(y, yhat).ravel()
+    precise = (tn+tp)/float(tn+fp+fn+tp)
+    recall = tp/float(tp+fn)
 
+def randomforest(n_estimators_=10, max_depth_=9,max_features_=9, min_samples_split_=10):
+    forest = RandomForestClassifier(n_estimators=n_estimators_c, max_depth=max_depth_, max_features=max_features_, min_samples_split=min_samples_split_, bootstrap=True,
+                                    n_jobs=3)
+    return forest
+
+
+n_estimatorslist=[3,5,10,15,20,30]
+max_depthlist=[3,5,7,8,9,10,15]
+max_featureslist = [5,7,9,10,12,15]
+min_samples_splitlist=[5,10,15,30,50,100]
+acc_estimators  =[]
+acc_maxdepth=[]
+acc_maxfeatures=[]
+acc_min_samples_split=[]
 
 train_X, train_y = processData(train_set)
 test_X, test_y = processData(test_set)
 
-forest.fit(train_X,train_y)
-yhat = forest.predict(test_X)
-print(accuracy(yhat,test_y))
+
+
+for n in n_estimatorslist:
+    forest = randomforest(n_estimators_=n)
+    forest.fit(train_X, train_y)
+    yhat = forest.predict(test_X)
+    acc_estimators.append(accuracy(yhat,test_y))
+
+
+
+
+
+
+
+print()
 
