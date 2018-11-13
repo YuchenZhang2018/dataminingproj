@@ -35,11 +35,11 @@ def processData(data):
 
     return data_arr, label
 
-# def accuracy(yhat, y):
-#     tn, fp, fn, tp = confusion_matrix(y, yhat).ravel()
-#     precise = (tn+tp)/float(tn+fp+fn+tp)
-#     recall = tp/float(tp+fn)
-#     return precise
+def accuracy(yhat, y):
+    tn, fp, fn, tp = confusion_matrix(y, yhat).ravel()
+    precise = (tn+tp)/float(tn+fp+fn+tp)
+    recall = tp/float(tp+fn)
+    return precise
 
 def randomforest(n_estimators_=10, max_depth_=9,max_features_=9, min_samples_split_=10):
     forest = RandomForestClassifier(n_estimators=n_estimators_, max_depth=max_depth_, max_features=max_features_, min_samples_split=min_samples_split_, bootstrap=True,
@@ -112,6 +112,9 @@ plt.savefig("final Precise-Recall Curve")
 
 skplt.metrics.plot_precision_recall(test_y, yhat)
 plt.savefig("final Precise-Recall Curve")
+
+print(forest.score(test_X,test_y))
+yhat = forest.predict(test_X)
 
 # skplt.metrics.plot_confusion_matrix(test_y, yhat, normalize=True)
 # plt.savefig("final Confusion Matrix table")
