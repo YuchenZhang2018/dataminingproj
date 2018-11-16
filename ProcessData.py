@@ -41,6 +41,9 @@ dic_7={"No phone service":-1,"Yes":1, "No":0}
 data_set['MultipleLines'] = transforForamt(data_set['MultipleLines'],dic_7)
 
 
+# save the original dataset in one piece
+data_set.to_csv("data/Telco_Churn.csv")
+
 
 data_suffle = data_set.sample(frac=1)
 train_ratio = 0.638
